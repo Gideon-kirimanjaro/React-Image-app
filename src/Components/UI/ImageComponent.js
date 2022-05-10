@@ -1,5 +1,9 @@
 const ImageComponent = ({ children }) => {
-  return <div className="d-flex">{children}</div>;
+  return (
+    <div>
+      <div>{children}</div>
+    </div>
+  );
 };
 ImageComponent.img = (props) => {
   return <div>{props.children}</div>;
@@ -7,7 +11,7 @@ ImageComponent.img = (props) => {
 ImageComponent.description = (props) => {
   return (
     <div>
-      <h4>{props.children}</h4>
+      <h4 style={{ color: "green", fontFamily: "serif" }}>{props.children}</h4>
     </div>
   );
 };

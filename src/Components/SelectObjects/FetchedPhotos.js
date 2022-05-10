@@ -17,23 +17,30 @@ const FetchedPhotos = () => {
         });
       });
     });
-    console.log("i fire once");
   }, []);
-
   return (
-    <div className="d-flex flex-column">
-      {imageList.map((url, keys) => {
-        return (
-          <ImageComponent>
-            <ImageComponent.img>
-              <StyledImage key={keys} src={url} />
-            </ImageComponent.img>
-            <ImageComponent.description>
-              This is a description
-            </ImageComponent.description>
-          </ImageComponent>
-        );
-      })}
+    <div className="p-4">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        {imageList.map((url, keys) => {
+          return (
+            <div>
+              <ImageComponent>
+                <ImageComponent.img key={keys}>
+                  <StyledImage src={url} />
+                </ImageComponent.img>
+                <ImageComponent.description>
+                  This is a description
+                </ImageComponent.description>
+              </ImageComponent>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,25 @@
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import ImageHolder from "./ImageHolder";
 import CategorySelect from "./SelectObjects/CategorySelect";
 import FetchedPhotos from "./SelectObjects/FetchedPhotos";
 import PhotoSelect from "./SelectObjects/PhotoSelect";
 
-const photos = () => {
-  const onLiftImage = (liftedImage) => {
+const Photos = () => {
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState(false);
+  function onLiftImage(liftedImage) {
     console.log(liftedImage);
+  }
+
+  const descriptionHandler = (e) => {
+    const enteredDescription = e.target.value;
+    if (enteredDescription.trim().length === 0) {
+      setError(true);
+    } else if (enteredDescription.trim().length > 0) {
+      setError(false);
+    }
+    setDescription(enteredDescription);
   };
   return (
     <div>
@@ -19,12 +32,14 @@ const photos = () => {
         <Form.Group className="" controlId="formBasicText">
           <Form.Control
             style={{
-              borderColor: "green",
+              borderColor: error ? "red" : "green",
               borderRadius: "5px",
               padding: "4px",
             }}
             type="text"
             placeholder="Enter a description"
+            value={description}
+            onChange={descriptionHandler}
           />
         </Form.Group>
       </Form>
@@ -36,4 +51,4 @@ const photos = () => {
     </div>
   );
 };
-export default photos;
+export default Photos;
