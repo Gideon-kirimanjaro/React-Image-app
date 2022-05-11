@@ -6,9 +6,10 @@ import { storage } from "../../firebase";
 import ImageComponent from "../UI/ImageComponent";
 import StyledImage from "../UI/StyledImage";
 
-const FetchedPhotos = () => {
+const FetchedPhotos = (props) => {
   const [imageList, setImageList] = useState([]);
   const imgListRef = ref(storage, "images/");
+  props.liftUrl(imageList);
   useEffect(() => {
     listAll(imgListRef).then((response) => {
       response.items.forEach((item) => {

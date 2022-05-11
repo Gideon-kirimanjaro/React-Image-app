@@ -4,12 +4,18 @@ import ImageHolder from "./ImageHolder";
 import CategorySelect from "./SelectObjects/CategorySelect";
 import FetchedPhotos from "./SelectObjects/FetchedPhotos";
 import PhotoSelect from "./SelectObjects/PhotoSelect";
-
+import Button from "./UI/Button";
+import axios from "axios";
 const Photos = () => {
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
+  const [image, setImage] = useState();
+  const [category, setCategory] = useState();
+  const [submitData, setSubmitData] = useState([]);
+  const api =
+    "https://imageuploadapp-d3a25-default-rtdb.firebaseio.com/posts.json";
   function onLiftImage(liftedImage) {
-    console.log(liftedImage);
+    setImage(liftedImage);
   }
 
   const descriptionHandler = (e) => {
@@ -21,13 +27,28 @@ const Photos = () => {
     }
     setDescription(enteredDescription);
   };
+  const categoryHandler = (liftedValue) => {
+    setCategory(liftedValue);
+  };
+  const submitDataHandler = () => {
+    setSubmitData({
+      description: description,
+      category: category,
+    });
+    if (submitData !== "") {
+      axios.post(api, submitData).then((response) => {
+        console.log("<<>>", response.data);
+      });
+      console.log("<><>Submit the Data<><>");
+    } else {
+      alert("Fill all the details");
+    }
+  };
+
   return (
     <div>
       <h2>Photo pocket</h2>
-      {/* choose photo from the loal drive then choose a category and date. After that post to an api and fetch.
-      The fetched photos should have filters for date & category. Then there should be a search bar to search a photo 
-      by name. */}
-      <PhotoSelect></PhotoSelect>
+      {/* <PhotoSelect></PhotoSelect>
       <Form>
         <Form.Group className="" controlId="formBasicText">
           <Form.Control
@@ -43,11 +64,11 @@ const Photos = () => {
           />
         </Form.Group>
       </Form>
-      <CategorySelect></CategorySelect>
+      <CategorySelect liftedCategory={categoryHandler}></CategorySelect> */}
       <div className="mt-4">
         <ImageHolder liftImage={onLiftImage}></ImageHolder>
       </div>
-      <FetchedPhotos></FetchedPhotos>
+      {/* <Button onClick={submitDataHandler}>SUBMIT</Button> */}
     </div>
   );
 };
